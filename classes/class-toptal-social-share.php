@@ -8,8 +8,17 @@ class Toptal_Social_Share {
 
 	/**
 	 * Plugin display name.
+	 *
+	 * @since  1.0.0
 	 */
 	private $plugin_display_name;
+
+	/**
+	 * Default Networks.
+	 *
+	 * @since  1.0.0
+	 */
+	private $social_networks;
 
 	/**
 	 * The settings options.
@@ -25,8 +34,9 @@ class Toptal_Social_Share {
 	 */
 	public function __construct() {
 
-		$this->options = get_option( 'tss_options' );
+		$this->options             = get_option( 'tss_options' );
 		$this->plugin_display_name = __( 'Toptal Social Share', 'toptal-social-share' );
+		$this->social_networks     = array( 'Facebook' , 'Twitter', 'Google+', 'Pinterest', 'LinkedIn', 'WhatsApp' );
 	}
 
 	/**
@@ -123,6 +133,22 @@ class Toptal_Social_Share {
 			TSS_SOCIAL_SHARE_SLUG,
 			'tss_general_settings_section'
 		);
+
+		add_settings_field(
+			'activated_networks',
+			__( 'Select active Networks', 'toptal-social-share' ),
+			array( $this, 'render_field_activated_networks' ),
+			TSS_SOCIAL_SHARE_SLUG,
+			'tss_general_settings_section'
+		);
+
+		add_settings_field(
+			'ordered_networks',
+			null,
+			array( $this, 'render_field_ordered_networks' ),
+			TSS_SOCIAL_SHARE_SLUG,
+			'tss_general_settings_section'
+		);
 	}
 
 	/**
@@ -161,6 +187,54 @@ class Toptal_Social_Share {
 			<?php endforeach; ?>
 		</fieldset>
 
+		<?php
+	}
+
+	/**
+	 * Render field for Activated Networks
+	 *
+	 * @since  1.0.0
+	 */
+	public function render_field_activated_networks() {
+
+		// Get current options
+		$options = get_option( 'tss_options' );
+
+		// Check if we already stored the order of the networks
+		if ( isset( $options['ordered_networks'] ) ) {
+
+			// Explode our comma separated values into an array
+			$this->social_networks = explode( ',', $options['ordered_networks'] );
+		}
+
+		// Check if there are any settings already stored
+		if ( isset( $options['activated_networks'] ) ) {
+			$activated_networks = $options['activated_networks'];
+		} else {
+			$activated_networks = array();
+		}
+		?>
+
+		<fieldset>
+			<ul id="tss-sortable-networks">
+				<?php foreach ( $this->social_networks as $network ) : ?>
+					<li data-network="<?php echo $network; ?>"><label><input type="checkbox" name="tss_options[activated_networks][<?php echo $network; ?>]" value="1" <?php checked( 1, $activated_networks[$network], true ); ?>><?php echo esc_html( $network ); ?></label></li>
+				<?php endforeach; ?>
+			</ul>
+			<p class="description">Drag and drop the items to change the order of appearance.</p>
+		</fieldset>
+
+		<?php
+	}
+
+	/**
+	 * Render hidden field to store Networks order
+	 *
+	 * @since  1.0.0
+	 */
+	public function render_field_ordered_networks() {
+		?>
+		<input type="hidden" name="tss_options[ordered_networks]" id="tss-ordered-networks">
 		<?php
 	}
 
