@@ -157,7 +157,7 @@ class Toptal_Social_Share {
 
 		<fieldset>
 			<?php foreach ( $public_post_types as $key => $value ) : ?>
-				<label><input type="checkbox" name="tss_options[post_types][<?php echo $key; ?>]" value="1" <?php checked( 1, $selected_post_types[$key], true ); ?>><?php echo esc_html( $value ); ?></label><br>
+				<label style="margin-right: 40px !important;"><input type="checkbox" name="tss_options[post_types][<?php echo $key; ?>]" value="1" <?php checked( 1, $selected_post_types[$key], true ); ?>><?php echo esc_html( $value ); ?></label>
 			<?php endforeach; ?>
 		</fieldset>
 
