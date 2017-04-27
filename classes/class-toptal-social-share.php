@@ -45,6 +45,9 @@ class Toptal_Social_Share {
 		// Register settings
 		add_action( 'admin_init', array( $this, 'register_settings_and_fields' ) );
 
+		// Enqueue our JS scripts
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
+
 		// Add an action link to the settings page on the plugins page.
 		add_filter( 'plugin_action_links_' . TSS_SOCIAL_SHARE_BASENAME, array( $this, 'plugins_page_action_links' ) );
 	}
@@ -210,6 +213,24 @@ class Toptal_Social_Share {
 
 		// TODO
 		return $input;
+	}
+
+	/**
+	 * Enqueue the admin JS
+	 *
+	 * @since  1.0.0
+	 */
+	public function admin_enqueue( $hook ) {
+
+		// Only enqueue on our settings page
+		if ( 'settings_page_' . TSS_SOCIAL_SHARE_SLUG == $hook ) {
+
+			wp_enqueue_script(
+				'tss-admin-js',
+				TSS_SOCIAL_SHARE_URL . '/js/admin.js',
+				array( 'jquery', 'jquery-ui-sortable' )
+			);
+		}
 	}
 
 	/**
