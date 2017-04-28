@@ -165,7 +165,7 @@ class Toptal_Social_Share {
 
 		add_settings_field(
 			'icons_size',
-			__( 'Social icons size', 'toptal-social-share' ),
+			__( 'Icons size', 'toptal-social-share' ),
 			array( $this, 'render_field_icons_size' ),
 			TSS_SOCIAL_SHARE_SLUG,
 			'tss_social_icons_settings_section'
