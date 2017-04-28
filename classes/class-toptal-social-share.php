@@ -163,6 +163,14 @@ class Toptal_Social_Share {
 			TSS_SOCIAL_SHARE_SLUG
 		);
 
+		add_settings_field(
+			'icons_size',
+			__( 'Social icons size', 'toptal-social-share' ),
+			array( $this, 'render_field_icons_size' ),
+			TSS_SOCIAL_SHARE_SLUG,
+			'tss_social_icons_settings_section'
+		);
+
 	}
 
 	/**
@@ -226,6 +234,28 @@ class Toptal_Social_Share {
 				<?php endforeach; ?>
 			</ul>
 			<p class="description">Drag and drop the items to change the order of appearance.</p>
+		</fieldset>
+
+		<?php
+	}
+
+	/**
+	 * Render field for Social Icons size
+	 *
+	 * @since  1.0.0
+	 */
+	public function render_field_icons_size() {
+
+		// Get current options
+		$options = get_option( 'tss_options' );
+		$current_size = $options['icons_size'];
+
+		?>
+
+		<fieldset>
+			<label><input type="radio" name="tss_options[icons_size]" value="small" <?php checked( 'small', $current_size, true ); ?>> Small</label><br>
+			<label><input type="radio" name="tss_options[icons_size]" value="medium" <?php checked( 'medium', $current_size, true ); ?>> Medium</label><br>
+			<label><input type="radio" name="tss_options[icons_size]" value="large" <?php checked( 'large', $current_size, true ); ?>> Large</label>
 		</fieldset>
 
 		<?php
@@ -320,12 +350,15 @@ class Toptal_Social_Share {
 
 			$ordered_networks = 'Facebook,Twitter,Google+,Pinterest,LinkedIn,WhatsApp';
 
+			$icons_size = 'small';
+
 			update_option(
 				'tss_options',
 				array(
 					'post_types'         => $post_types,
 					'activated_networks' => $activated_networks,
 					'ordered_networks'   => $ordered_networks,
+					'icons_size'         => $icons_size,
 				)
 			);
 		}
