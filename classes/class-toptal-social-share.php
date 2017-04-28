@@ -152,6 +152,17 @@ class Toptal_Social_Share {
 			TSS_SOCIAL_SHARE_SLUG,
 			'tss_general_settings_section'
 		);
+
+		//
+		// Add Social Icons Settings section and fields
+		//
+		add_settings_section(
+			'tss_social_icons_settings_section',
+			__( 'Social Icons Settings', 'toptal-social-share' ),
+			array( $this, 'render_settings_section' ),
+			TSS_SOCIAL_SHARE_SLUG
+		);
+
 	}
 
 	/**
