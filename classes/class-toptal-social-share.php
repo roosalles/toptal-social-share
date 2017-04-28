@@ -332,7 +332,7 @@ class Toptal_Social_Share {
 
 		$options = get_option( 'tss_options' );
 
-		if ( FALSE === $options ) {
+		if ( ! $options ) {
 
 			// Set default values
 			$post_types = array(
