@@ -293,6 +293,44 @@ class Toptal_Social_Share {
 	}
 
 	/**
+	 * Set default values on activation.
+	 *
+	 * @since  1.0.0
+	 */
+	static function set_default_values() {
+
+		$options = get_option( 'tss_options' );
+
+		if ( FALSE === $options ) {
+
+			// Set default values
+			$post_types = array(
+				'post' => 1
+			);
+
+			$activated_networks = array(
+				'Facebook'  => 1,
+	            'Twitter'   => 1,
+	            'Google+'   => 1,
+	            'Pinterest' => 1,
+	            'LinkedIn'  => 1,
+	            'WhatsApp'  => 1,
+			);
+
+			$ordered_networks = 'Facebook,Twitter,Google+,Pinterest,LinkedIn,WhatsApp';
+
+			update_option(
+				'tss_options',
+				array(
+					'post_types'         => $post_types,
+					'activated_networks' => $activated_networks,
+					'ordered_networks'   => $ordered_networks,
+				)
+			);
+		}
+	}
+
+	/**
 	 * Enqueue the admin JS
 	 *
 	 * @since  1.0.0

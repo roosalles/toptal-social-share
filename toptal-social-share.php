@@ -33,6 +33,13 @@ define( 'TSS_SOCIAL_SHARE_BASENAME', plugin_basename( __FILE__ ) );
 require_once TSS_SOCIAL_SHARE_PATH . 'classes/class-toptal-social-share.php';
 
 /**
+ * Set the default values on plugin activation.
+ *
+ * @since  1.0.0
+ */
+register_activation_hook( __FILE__, array( 'Toptal_Social_Share', 'set_default_values' ) );
+
+/**
  * Initialize the plugin.
  *
  * @since  1.0.0
