@@ -173,15 +173,12 @@ class Toptal_Social_Share {
 		// Get current options
 		$options = get_option( 'tss_options' );
 
-		// Check if there is any Post Type already stored
-		if ( isset( $options['post_types'] ) ) {
-			$selected_post_types = $options['post_types'];
-		} else {
-			$selected_post_types = array();
-		}
+		// Get selected post types
+		$selected_post_types = $options['post_types'];
 
 		// Get list of public Post Types and render checkboxes
 		$public_post_types = $this->get_public_post_types();
+
 		?>
 
 		<fieldset>
@@ -203,19 +200,12 @@ class Toptal_Social_Share {
 		// Get current options
 		$options = get_option( 'tss_options' );
 
-		// Check if we already stored the order of the networks
-		if ( isset( $options['ordered_networks'] ) ) {
+		// Explode our comma separated values into an array
+		$this->social_networks = explode( ',', $options['ordered_networks'] );
 
-			// Explode our comma separated values into an array
-			$this->social_networks = explode( ',', $options['ordered_networks'] );
-		}
+		// Get active networks
+		$activated_networks = $options['activated_networks'];
 
-		// Check if there are any settings already stored
-		if ( isset( $options['activated_networks'] ) ) {
-			$activated_networks = $options['activated_networks'];
-		} else {
-			$activated_networks = array();
-		}
 		?>
 
 		<fieldset>
