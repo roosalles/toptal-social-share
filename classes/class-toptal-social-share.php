@@ -187,6 +187,14 @@ class Toptal_Social_Share {
 			'tss_social_icons_settings_section'
 		);
 
+		add_settings_field(
+			'icons_position',
+			__( 'Icons Position', 'toptal-social-share' ),
+			array( $this, 'render_field_icons_position' ),
+			TSS_SOCIAL_SHARE_SLUG,
+			'tss_social_icons_settings_section'
+		);
+
 	}
 
 	/**
@@ -323,6 +331,29 @@ class Toptal_Social_Share {
 	}
 
 	/**
+	 * Render field for Icons positions
+	 *
+	 * @since  1.0.0
+	 */
+	public function render_field_icons_position() {
+
+		// Get current options
+		$options = get_option( 'tss_options' );
+		$current_positions = $options['icons_position'];
+
+		?>
+
+		<fieldset>
+			<label><input type="checkbox" name="tss_options[icons_position][below_title]" value="1" <?php checked( 1, $current_positions['below_title'], true ); ?>>Display social share icons below the title</label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][floating_left]" value="1" <?php checked( 1, $current_positions['floating_left'], true ); ?>>Display social share floating on the left of the page</label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][after_content]" value="1" <?php checked( 1, $current_positions['after_content'], true ); ?>>Display social share after the content</label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][featured_image]" value="1" <?php checked( 1, $current_positions['featured_image'], true ); ?>>Display social share icons inside featured image</label>
+		</fieldset>
+
+		<?php
+		}
+
+	/**
 	 * Render hidden field to store Networks order
 	 *
 	 * @since  1.0.0
@@ -406,7 +437,7 @@ class Toptal_Social_Share {
 	            'Google+'   => 1,
 	            'Pinterest' => 1,
 	            'LinkedIn'  => 1,
-	            'WhatsApp'  => 1,
+	            'WhatsApp'  => 1
 			);
 
 			$ordered_networks = 'Facebook,Twitter,Google+,Pinterest,LinkedIn,WhatsApp';
@@ -417,6 +448,12 @@ class Toptal_Social_Share {
 
 			$custom_color = '#000';
 
+			$icons_position = array(
+				'below_title'    => 1,
+				'after_content'  => 1
+			);
+
+			// Update options table
 			update_option(
 				'tss_options',
 				array(
@@ -426,6 +463,7 @@ class Toptal_Social_Share {
 					'icons_size'         => $icons_size,
 					'use_custom_color'   => $use_custom_color,
 					'icons_custom_color' => $custom_color,
+					'icons_position'     => $icons_position
 				)
 			);
 		}
