@@ -16,4 +16,12 @@ jQuery( document ).ready( function( $ ) {
 		update: updateOrder
 	});
 	
+	// Execute wpColorPicker for all color picker fields
+	$( '#tss-color-picker' ).wpColorPicker();
+	
+	// Show/Hide Color picker on user selection/click
+	$( '#tss-use-custom-color-field' ).on( 'click', function() {
+		$( '#tss-color-picker-wrapper' ).toggle();
+	});
+	
 });

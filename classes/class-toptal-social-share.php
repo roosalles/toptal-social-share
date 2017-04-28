@@ -171,6 +171,22 @@ class Toptal_Social_Share {
 			'tss_social_icons_settings_section'
 		);
 
+		add_settings_field(
+			'use_custom_color',
+			__( 'Icons color', 'toptal-social-share' ),
+			array( $this, 'render_field_use_custom_color' ),
+			TSS_SOCIAL_SHARE_SLUG,
+			'tss_social_icons_settings_section'
+		);
+
+		add_settings_field(
+			'icons_custom_color',
+			null,
+			array( $this, 'render_field_icons_custom_color' ),
+			TSS_SOCIAL_SHARE_SLUG,
+			'tss_social_icons_settings_section'
+		);
+
 	}
 
 	/**
@@ -256,6 +272,51 @@ class Toptal_Social_Share {
 			<label><input type="radio" name="tss_options[icons_size]" value="small" <?php checked( 'small', $current_size, true ); ?>>Small</label><br>
 			<label><input type="radio" name="tss_options[icons_size]" value="medium" <?php checked( 'medium', $current_size, true ); ?>>Medium</label><br>
 			<label><input type="radio" name="tss_options[icons_size]" value="large" <?php checked( 'large', $current_size, true ); ?>>Large</label>
+		</fieldset>
+
+		<?php
+	}
+
+	/**
+	 * Render field for Use Custom Color option
+	 *
+	 * @since  1.0.0
+	 */
+	public function render_field_use_custom_color() {
+
+		// Get current options
+		$options = get_option( 'tss_options' );
+		$current_option = $options['use_custom_color'];
+
+		?>
+
+		<fieldset>
+			<label><input type="checkbox" id="tss-use-custom-color-field" name="tss_options[use_custom_color]" value="1" <?php checked( 1, $current_option, true ); ?>>Set custom color</label>
+			<p class="description">Check this option to override default colors with a custom one.</p>
+		</fieldset>
+
+		<?php
+	}
+
+	/**
+	 * Render Color picker field to store custom color
+	 *
+	 * @since  1.0.0
+	 */
+	public function render_field_icons_custom_color() {
+
+		// Get current options
+		$options = get_option( 'tss_options' );
+		$use_custom_color = $options['use_custom_color'];
+		$custom_color = $options['icons_custom_color'];
+
+		// Show color picker only when option is selected
+		$style = ! $use_custom_color ? ' style="display: none;"' : '';
+
+		?>
+
+		<fieldset id="tss-color-picker-wrapper"<?php echo $style; ?>>
+			<input type="text" id="tss-color-picker" name="tss_options[icons_custom_color]" value="<?php echo $custom_color; ?>" />
 		</fieldset>
 
 		<?php
@@ -352,6 +413,10 @@ class Toptal_Social_Share {
 
 			$icons_size = 'small';
 
+			$use_custom_color = 0;
+
+			$custom_color = '#000';
+
 			update_option(
 				'tss_options',
 				array(
@@ -359,6 +424,8 @@ class Toptal_Social_Share {
 					'activated_networks' => $activated_networks,
 					'ordered_networks'   => $ordered_networks,
 					'icons_size'         => $icons_size,
+					'use_custom_color'   => $use_custom_color,
+					'icons_custom_color' => $custom_color,
 				)
 			);
 		}
@@ -374,10 +441,16 @@ class Toptal_Social_Share {
 		// Only enqueue on our settings page
 		if ( 'settings_page_' . TSS_SOCIAL_SHARE_SLUG == $hook ) {
 
+			wp_enqueue_style( 'wp-color-picker' );
+
 			wp_enqueue_script(
 				'tss-admin-js',
 				TSS_SOCIAL_SHARE_URL . '/js/admin.js',
-				array( 'jquery', 'jquery-ui-sortable' )
+				array(
+					'jquery',
+					'jquery-ui-sortable',
+					'wp-color-picker',
+				)
 			);
 		}
 	}
