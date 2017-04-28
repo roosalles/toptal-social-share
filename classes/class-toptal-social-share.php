@@ -119,10 +119,13 @@ class Toptal_Social_Share {
 			array( $this, 'validate_options' )
 		);
 
+		//
+		// Add General Settings section and fields
+		//
 		add_settings_section(
 			'tss_general_settings_section',
 			__( 'General Settings', 'toptal-social-share' ),
-			array( $this, 'settings_section' ),
+			array( $this, 'render_settings_section' ),
 			TSS_SOCIAL_SHARE_SLUG
 		);
 
@@ -156,7 +159,7 @@ class Toptal_Social_Share {
 	 *
 	 * @since  1.0.0
 	 */
-	public function settings_section() {
+	public function render_settings_section() {
 		return;
 	}
 
