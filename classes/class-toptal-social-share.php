@@ -55,8 +55,11 @@ class Toptal_Social_Share {
 		// Register settings
 		add_action( 'admin_init', array( $this, 'register_settings_and_fields' ) );
 
-		// Enqueue our JS scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
+		// Enqueue our front-end scripts
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		// Enqueue our admin scripts
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_admin' ) );
 
 		// Add an action link to the settings page on the plugins page.
 		add_filter( 'plugin_action_links_' . TSS_SOCIAL_SHARE_BASENAME, array( $this, 'plugins_page_action_links' ) );
@@ -470,11 +473,30 @@ class Toptal_Social_Share {
 	}
 
 	/**
-	 * Enqueue the admin JS
+	 * Enqueue scripts
 	 *
 	 * @since  1.0.0
 	 */
-	public function admin_enqueue( $hook ) {
+	public function enqueue_scripts() {
+
+		// Enqueue front-end styles
+		wp_enqueue_style(
+			'tss-css',
+			TSS_SOCIAL_SHARE_URL . '/css/style.css'
+		);
+
+		wp_enqueue_style(
+			'tss-icons',
+			TSS_SOCIAL_SHARE_URL . '/css/icons.css'
+		);
+	}
+
+	/**
+	 * Enqueue admin scripts
+	 *
+	 * @since  1.0.0
+	 */
+	public function enqueue_scripts_admin( $hook ) {
 
 		// Only enqueue on our settings page
 		if ( 'settings_page_' . TSS_SOCIAL_SHARE_SLUG == $hook ) {
@@ -487,7 +509,7 @@ class Toptal_Social_Share {
 				array(
 					'jquery',
 					'jquery-ui-sortable',
-					'wp-color-picker',
+					'wp-color-picker'
 				)
 			);
 		}

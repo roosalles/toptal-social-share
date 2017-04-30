@@ -1,0 +1,56 @@
+/* Default styles */
+.tss-share-buttons .share-button {
+	display: inline-block;
+	float: left;
+	color: #fff;
+}
+
+.tss-share-buttons .share-button.facebook {
+	background-color: #3b5998;
+}
+
+.tss-share-buttons .share-button.twitter {
+	background-color: #1da1f2;
+}
+
+.tss-share-buttons .share-button.google-plus {
+	background-color: #dd4b39;
+}
+
+.tss-share-buttons .share-button.pinterest {
+	background-color: #bd081c;
+}
+
+.tss-share-buttons .share-button.linkedin {
+	background-color: #0077b5;
+}
+
+.tss-share-buttons .share-button.whatsapp {
+	background-color: #25d366;
+}
+
+/* Icon sizes */
+.tss-share-buttons.small {
+	font-size: 1rem;
+}
+
+.tss-share-buttons.small .share-button {
+	padding: 4px 7px 1px;
+}
+
+.tss-share-buttons.medium {
+	font-size: 2rem;
+}
+
+.tss-share-buttons.medium .share-button {
+	padding: 5px 10px 2px;
+}
+
+.tss-share-buttons.large {
+	font-size: 3rem;
+}
+
+.tss-share-buttons.large .share-button {
+	padding: 10px 15px 4px;
+}
+
