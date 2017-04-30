@@ -63,6 +63,9 @@ class Toptal_Social_Share {
 
 		// Add an action link to the settings page on the plugins page.
 		add_filter( 'plugin_action_links_' . TSS_SOCIAL_SHARE_BASENAME, array( $this, 'plugins_page_action_links' ) );
+
+		// Add shortcode
+		add_shortcode( 'tss_shortcode', array( $this, 'tss_shortcode' ) );
 	}
 
 	/**
@@ -365,6 +368,91 @@ class Toptal_Social_Share {
 		?>
 		<input type="hidden" name="tss_options[ordered_networks]" id="tss-ordered-networks">
 		<?php
+	}
+
+	/**
+	 * Our main function
+	 *
+	 * @since  1.0.0
+	 */
+	public function render_buttons() {
+
+		// Get current settings
+		$options          = get_option( 'tss_options' );
+		$networks         = $options['activated_networks'];
+		$icons_size       = $options['icons_size'];
+		$use_custom_color = $options['use_custom_color'];
+		$custom_color     = $options['icons_custom_color'];
+
+		// Bail if no network is active
+		if ( ! $networks ) {
+			return;
+		}
+
+		// Share buttons style
+		$style = $icons_size . ' ';
+
+		// Custom color
+		if ( $use_custom_color ) {
+			$custom_color_style = 'background-color: #fff; color: ' . $custom_color;
+		}
+
+		ob_start();
+		?>
+
+		<div class="tss-share-buttons <?php echo esc_attr( $style ); ?>">
+
+			<?php foreach ( $networks as $network => $value ) : ?>
+
+				<?php
+
+				if ( $network == 'Facebook' ) {
+					$class = 'facebook';
+					$icon_class = 'icon-facebook';
+
+				} elseif ( $network == 'Twitter' ) {
+					$class = 'twitter';
+					$icon_class = 'icon-twitter';
+
+				} elseif ( $network == 'Google+' ) {
+					$class = 'google-plus';
+					$icon_class = 'icon-google-plus';
+
+				} elseif ( $network == 'Pinterest' ) {
+					$class = 'pinterest';
+					$icon_class = 'icon-pinterest';
+
+				} elseif ( $network == 'LinkedIn' ) {
+					$class = 'linkedin';
+					$icon_class = 'icon-linkedin';
+
+				} elseif ( $network == 'WhatsApp' ) {
+					$class = 'whatsapp';
+					$icon_class = 'icon-whatsapp';
+				}
+
+				?>
+
+				<div class="share-button <?php echo esc_attr( $class ); ?>" style="<?php echo esc_attr( $custom_color_style ); ?>">
+					<i class="<?php echo esc_attr( $icon_class ); ?>"></i>
+				</div>
+
+			<?php endforeach; ?>
+
+		</div>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * The shortcode
+	 *
+	 * @since   1.0.0
+	 */
+	function tss_shortcode() {
+
+		return $this->render_buttons();
 	}
 
 	/**
