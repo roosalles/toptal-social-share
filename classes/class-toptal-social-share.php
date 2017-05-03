@@ -567,7 +567,7 @@ class Toptal_Social_Share {
 	 */
 	public function enqueue_scripts() {
 
-		// Enqueue front-end styles
+		// Enqueue front-end styles and scripts
 		wp_enqueue_style(
 			'tss-css',
 			TSS_SOCIAL_SHARE_URL . '/css/style.css'
@@ -576,6 +576,12 @@ class Toptal_Social_Share {
 		wp_enqueue_style(
 			'tss-icons',
 			TSS_SOCIAL_SHARE_URL . '/css/icons.css'
+		);
+
+		wp_enqueue_script(
+			'tss-js',
+			TSS_SOCIAL_SHARE_URL . '/js/front-end.js',
+			array( 'jquery' )
 		);
 	}
 
