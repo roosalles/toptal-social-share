@@ -450,7 +450,7 @@ class Toptal_Social_Share {
 	 *
 	 * @since   1.0.0
 	 */
-	function tss_shortcode() {
+	public function tss_shortcode() {
 
 		return $this->render_buttons();
 	}
