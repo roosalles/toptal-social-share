@@ -353,10 +353,10 @@ class Toptal_Social_Share {
 		?>
 
 		<fieldset>
-			<label><input type="checkbox" name="tss_options[icons_position][below_title]" value="1" <?php checked( 1, $current_positions['below_title'], true ); ?>>Display social share icons below the title</label><br>
-			<label><input type="checkbox" name="tss_options[icons_position][floating_left]" value="1" <?php checked( 1, $current_positions['floating_left'], true ); ?>>Display social share floating on the left of the page</label><br>
-			<label><input type="checkbox" name="tss_options[icons_position][after_content]" value="1" <?php checked( 1, $current_positions['after_content'], true ); ?>>Display social share after the content</label><br>
-			<label><input type="checkbox" name="tss_options[icons_position][featured_image]" value="1" <?php checked( 1, $current_positions['featured_image'], true ); ?>>Display social share icons inside featured image</label>
+			<label><input type="checkbox" name="tss_options[icons_position][below_title]" value="1" <?php checked( 1, $current_positions['below_title'], true ); ?>><?php echo __( 'Display social share icons below the title', 'toptal-social-share' ); ?></label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][floating_left]" value="1" <?php checked( 1, $current_positions['floating_left'], true ); ?>><?php echo __( 'Display social share floating on the left of the page', 'toptal-social-share' ); ?></label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][after_content]" value="1" <?php checked( 1, $current_positions['after_content'], true ); ?>><?php echo __( 'Display social share after the content', 'toptal-social-share' ); ?></label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][featured_image]" value="1" <?php checked( 1, $current_positions['featured_image'], true ); ?>><?php echo __( 'Display social share icons inside featured image', 'toptal-social-share' ); ?></label>
 		</fieldset>
 
 		<?php
@@ -391,7 +391,7 @@ class Toptal_Social_Share {
 		$networks   = $options['activated_networks'];
 
 		// Bail if no network is active or no post type is selected
-		if ( ! $networks || ! $post_types ) {
+		if ( ! $networks || ! $post_types || ( ! is_single() && ! is_page() ) || is_front_page() ) {
 			return;
 		}
 
@@ -405,8 +405,14 @@ class Toptal_Social_Share {
 
 		// Add hook to display share icons below title
 		if ( $position['below_title'] && array_key_exists( $post_type, $post_types ) ) {
-			//add_filter( 'the_content', array( $this, 'render_buttons_below_title' ), 10, 1 );
-			add_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
+
+			add_filter( 'the_post', array( $this, 'load_hooks_for_below_title' ), 10, 1 );
+
+// 			if ( is_single() || is_page() ) {
+// 				add_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
+// 			} else {
+// 				add_filter( 'the_post', array( $this, 'load_hooks_for_below_title' ), 10, 1 );
+// 			}
 		}
 
 		// Add hook to display share icons after content
@@ -423,6 +429,16 @@ class Toptal_Social_Share {
 		if ( $position['floating_left'] && array_key_exists( $post_type, $post_types ) ) {
 			add_action( 'wp_head', array( $this, 'render_buttons_floating_left' ) );
 		}
+	}
+
+	/**
+	 * Load hooks for Displaying button below title
+	 *
+	 * @since   1.0.0
+	 */
+	public function load_hooks_for_below_title( $post ) {
+
+		add_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
 	}
 
 	/**
@@ -480,9 +496,7 @@ class Toptal_Social_Share {
 		?>
 
 		<div class="tss-share-buttons <?php echo esc_attr( $extra_classes ); ?> <?php echo esc_attr( $style ); ?>">
-
 			<?php foreach ( $networks as $network => $value ) : ?>
-
 				<?php
 				// Init variables
 				$share_link = '';
@@ -552,11 +566,9 @@ class Toptal_Social_Share {
 				}
 
 				?>
-
 				<a href="<?php echo $share_link; ?>" <?php echo $extra_attr; ?> rel="nofollow" class="share-button <?php echo esc_attr( $class ); ?>" style="<?php echo esc_attr( $custom_color_style ); ?>">
 					<i class="<?php echo esc_attr( $icon_class ); ?>"></i>
 				</a>
-
 			<?php endforeach; ?>
 
 		</div>
@@ -582,23 +594,15 @@ class Toptal_Social_Share {
 	 */
 	public function render_buttons_below_title( $title, $id ) {
 
-		//if ( in_the_loop() && is_main_query() ) {
-			//$buttons = $this->render_buttons();
-			//$content = $buttons . $content;
-		//}
-
-		//return $content;
-
 		if ( in_the_loop() && is_main_query() && ! empty( $title ) ) {
 			$buttons = $this->render_buttons();
 			$title = $title . $buttons;
 
 			// Remove our filter after it's applied (in order to only apply in the main post title)
-			// remove_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
+			remove_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
 		}
 
 		return $title;
-
 	}
 
 	/**
@@ -608,10 +612,8 @@ class Toptal_Social_Share {
 	 */
 	public function render_buttons_after_content( $content ) {
 
-		//if ( in_the_loop() && is_main_query() ) {
-			$buttons = $this->render_buttons();
-			$content = $content . $buttons;
-		//}
+		$buttons = $this->render_buttons();
+		$content = $content . $buttons;
 
 		return $content;
 	}

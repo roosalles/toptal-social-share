@@ -7,6 +7,7 @@
 
 .tss-share-buttons a.share-button {
 	display: inline-block;
+	border: none;
 	float: left;
 	color: #fff;
 	transition: background-color 0.3s ease;
@@ -75,7 +76,7 @@
 
 /* Icon sizes */
 .tss-share-buttons.small {
-	font-size: 1rem;
+	font-size: 16px !important;
 }
 
 .tss-share-buttons.small .share-button {
@@ -83,7 +84,7 @@
 }
 
 .tss-share-buttons.medium {
-	font-size: 2rem;
+	font-size: 32px !important;
 }
 
 .tss-share-buttons.medium .share-button {
@@ -91,7 +92,7 @@
 }
 
 .tss-share-buttons.large {
-	font-size: 3rem;
+	font-size: 48px !important;
 }
 
 .tss-share-buttons.large .share-button {
