@@ -29,6 +29,14 @@ define( 'TSS_SOCIAL_SHARE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'TSS_SOCIAL_SHARE_URL', plugin_dir_url( __FILE__ ) );
 define( 'TSS_SOCIAL_SHARE_BASENAME', plugin_basename( __FILE__ ) );
 
+// Social Networks share urls
+define( 'TSS_FACEBOOK_URL', 'https://www.facebook.com/sharer.php' );
+define( 'TSS_TWITTER_URL', 'https://twitter.com/intent/tweet' );
+define( 'TSS_GOOGLEPLUS_URL', 'https://plus.google.com/share' );
+define( 'TSS_LINKEDIN_URL', 'https://www.linkedin.com/shareArticle' );
+define( 'TSS_PINTEREST_URL', 'https://www.pinterest.com/pin/create/button/' );
+define( 'TSS_WHATSAPP_URL', 'whatsapp://send' );
+
 // Include the main plugin class.
 require_once TSS_SOCIAL_SHARE_PATH . 'classes/class-toptal-social-share.php';
 
