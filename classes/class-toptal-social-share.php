@@ -66,6 +66,9 @@ class Toptal_Social_Share {
 
 		// Add shortcode
 		add_shortcode( 'tss_shortcode', array( $this, 'tss_shortcode' ) );
+
+		// Load our Hooks
+		add_action( 'wp', array( $this, 'load_hooks' ) );
 	}
 
 	/**
@@ -371,11 +374,63 @@ class Toptal_Social_Share {
 	}
 
 	/**
+	 * Load hooks
+	 *
+	 * @since  1.0.0
+	 */
+	public function load_hooks() {
+
+		// Bail when browsing WP admin area
+		if ( is_admin() ) {
+			return;
+		}
+
+		// Get current settings
+		$options    = get_option( 'tss_options' );
+		$post_types = $options['post_types'];
+		$networks   = $options['activated_networks'];
+
+		// Bail if no network is active or no post type is selected
+		if ( ! $networks || ! $post_types ) {
+			return;
+		}
+
+		global $post;
+
+		// Get icons position
+		$position = $options['icons_position'];
+
+		// Get current post type
+		$post_type = get_post_type( $post->ID );
+
+		// Add hook to display share icons below title
+		if ( $position['below_title'] && array_key_exists( $post_type, $post_types ) ) {
+			//add_filter( 'the_content', array( $this, 'render_buttons_below_title' ), 10, 1 );
+			add_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
+		}
+
+		// Add hook to display share icons after content
+		if ( $position['after_content'] && array_key_exists( $post_type, $post_types ) ) {
+			add_filter( 'the_content', array( $this, 'render_buttons_after_content' ), 10, 1 );
+		}
+
+		// Add hook to display share icons inside featured image
+		if ( $position['featured_image'] && array_key_exists( $post_type, $post_types ) ) {
+			add_filter( 'post_thumbnail_html', array( $this, 'render_buttons_featured_image' ), 10, 1 );
+		}
+
+		// Float share bar left side
+		if ( $position['floating_left'] && array_key_exists( $post_type, $post_types ) ) {
+			add_action( 'wp_head', array( $this, 'render_buttons_floating_left' ) );
+		}
+	}
+
+	/**
 	 * Our main function
 	 *
 	 * @since  1.0.0
 	 */
-	public function render_buttons() {
+	public function render_buttons( $extra_classes = '' ) {
 
 		// Get current settings
 		$options          = get_option( 'tss_options' );
@@ -389,6 +444,30 @@ class Toptal_Social_Share {
 			return;
 		}
 
+
+		if ( is_front_page() && ! in_the_loop() ) {
+
+			$permalink = get_home_url();
+			$title = get_bloginfo( 'name' );
+
+		} elseif ( is_home() && ! in_the_loop() ) {
+
+			$permalink = get_permalink( get_option( 'page_for_posts' ) ); //get_home_url();
+			$title = get_bloginfo( 'name' );
+
+		} elseif ( ! in_the_loop() && ! is_single() ) {
+
+			global $wp;
+			$permalink = home_url( add_query_arg( array(), $wp->request ) );
+			$title = get_bloginfo( 'name' ) . wp_title( null, false );
+
+		} else {
+
+			global $post;
+			$permalink = get_the_permalink( $post->ID );
+			$title = $post->post_title;
+		}
+
 		// Share buttons style
 		$style = $icons_size . ' ';
 
@@ -400,42 +479,83 @@ class Toptal_Social_Share {
 		ob_start();
 		?>
 
-		<div class="tss-share-buttons <?php echo esc_attr( $style ); ?>">
+		<div class="tss-share-buttons <?php echo esc_attr( $extra_classes ); ?> <?php echo esc_attr( $style ); ?>">
 
 			<?php foreach ( $networks as $network => $value ) : ?>
 
 				<?php
+				// Init variables
+				$share_link = '';
+				$extra_attr = '';
 
 				if ( $network == 'Facebook' ) {
 					$class = 'facebook';
 					$icon_class = 'icon-facebook';
 
+					// https://developers.facebook.com/docs/plugins/share-button/#example
+					$share_link = sprintf(
+						TSS_FACEBOOK_URL . '?u=%s&t=%s',
+						urlencode( $permalink ),
+						urlencode( $title )
+					);
+
 				} elseif ( $network == 'Twitter' ) {
 					$class = 'twitter';
 					$icon_class = 'icon-twitter';
+
+					// https://dev.twitter.com/web/tweet-button
+					$share_link = sprintf(
+						TSS_TWITTER_URL . '?url=%s&text=%s',
+						urlencode( $permalink ),
+						urlencode( $title )
+					);
 
 				} elseif ( $network == 'Google+' ) {
 					$class = 'google-plus';
 					$icon_class = 'icon-google-plus';
 
+					// https://developers.google.com/+/web/share/
+					$share_link = sprintf(
+						TSS_GOOGLEPLUS_URL . '?url=%s',
+						urlencode( $permalink )
+					);
+
 				} elseif ( $network == 'Pinterest' ) {
 					$class = 'pinterest';
 					$icon_class = 'icon-pinterest';
+
+					// https://developers.pinterest.com/docs/widgets/save/?
+					$share_link = TSS_PINTEREST_URL;
+					$extra_attr = 'data-pin-do="buttonBookmark" data-pin-custom="true"';
 
 				} elseif ( $network == 'LinkedIn' ) {
 					$class = 'linkedin';
 					$icon_class = 'icon-linkedin';
 
+					// https://developer.linkedin.com/docs/share-on-linkedin
+					$share_link = sprintf(
+						TSS_LINKEDIN_URL . '?url=%s&mini=true&title=%s&summary=',
+						urlencode( $permalink ),
+						urlencode( $title )
+					);
+
 				} elseif ( $network == 'WhatsApp' ) {
 					$class = 'whatsapp';
 					$icon_class = 'icon-whatsapp';
+
+					// http://stackoverflow.com/questions/21935149/sharing-link-on-whatsapp-from-mobile-website-not-application-for-android
+					$share_link = sprintf(
+						TSS_WHATSAPP_URL . '?text=%s',
+						urlencode( $permalink )
+					);
+					$extra_attr = 'data-action="'. esc_attr( 'share/whatsapp/share' ) . '"';
 				}
 
 				?>
 
-				<div class="share-button <?php echo esc_attr( $class ); ?>" style="<?php echo esc_attr( $custom_color_style ); ?>">
+				<a href="<?php echo $share_link; ?>" <?php echo $extra_attr; ?> rel="nofollow" class="share-button <?php echo esc_attr( $class ); ?>" style="<?php echo esc_attr( $custom_color_style ); ?>">
 					<i class="<?php echo esc_attr( $icon_class ); ?>"></i>
-				</div>
+				</a>
 
 			<?php endforeach; ?>
 
@@ -453,6 +573,72 @@ class Toptal_Social_Share {
 	public function tss_shortcode() {
 
 		return $this->render_buttons();
+	}
+
+	/**
+	 * Render buttons below title
+	 *
+	 * @since   1.0.0
+	 */
+	public function render_buttons_below_title( $title, $id ) {
+
+		//if ( in_the_loop() && is_main_query() ) {
+			//$buttons = $this->render_buttons();
+			//$content = $buttons . $content;
+		//}
+
+		//return $content;
+
+		if ( in_the_loop() && is_main_query() && ! empty( $title ) ) {
+			$buttons = $this->render_buttons();
+			$title = $title . $buttons;
+
+			// Remove our filter after it's applied (in order to only apply in the main post title)
+			// remove_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
+		}
+
+		return $title;
+
+	}
+
+	/**
+	 * Render buttons after content
+	 *
+	 * @since   1.0.0
+	 */
+	public function render_buttons_after_content( $content ) {
+
+		//if ( in_the_loop() && is_main_query() ) {
+			$buttons = $this->render_buttons();
+			$content = $content . $buttons;
+		//}
+
+		return $content;
+	}
+
+	/**
+	 * Render buttons inside featured image
+	 *
+	 * @since   1.0.0
+	 */
+	public function render_buttons_featured_image( $html ) {
+
+		if ( ! empty( $html ) ) {
+			$buttons = $this->render_buttons();
+			$html = '<div class="tss-featured-image-container">' . $html . '<span class="tss-featured-image-toggle">Share</span>' . $buttons . '</div>';
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Render buttons floating left
+	 *
+	 * @since   1.0.0
+	 */
+	public function render_buttons_floating_left() {
+
+		echo $this->render_buttons( 'floating-left' );
 	}
 
 	/**
@@ -582,6 +768,14 @@ class Toptal_Social_Share {
 			'tss-js',
 			TSS_SOCIAL_SHARE_URL . '/js/front-end.js',
 			array( 'jquery' )
+		);
+
+		wp_enqueue_script(
+			'tss-pinterest-js',
+			'//assets.pinterest.com/js/pinit.js',
+			array(),
+			null,
+			true
 		);
 	}
 
