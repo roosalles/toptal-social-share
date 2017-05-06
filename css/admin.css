@@ -1,0 +1,36 @@
+/* Default styles for admin settings page */
+.social-icon {
+	margin-right: 15px;
+	padding: 7px 3px 4px 7px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.social-icon:hover {
+	cursor: ns-resize;
+}
+
+.social-icon.facebook {
+	background-color: #3b5998;
+}
+
+.social-icon.twitter {
+	background-color: #1da1f2;
+}
+
+.social-icon.google-plus {
+	background-color: #dd4b39;
+}
+
+.social-icon.pinterest {
+	background-color: #bd081c;
+}
+
+.social-icon.linkedin {
+	background-color: #0077b5;
+}
+
+.social-icon.whatsapp {
+	background-color: #25d366;
+}

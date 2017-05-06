@@ -28,15 +28,49 @@ class Toptal_Social_Share {
 	private $options;
 
 	/**
+	 * The Buttons CSS Classes.
+	 *
+	 * @since  1.0.0
+	 */
+	private $buttons_classes;
+
+	/**
+	 * The Icons CSS Classes.
+	 *
+	 * @since  1.0.0
+	 */
+	private $icons_classes;
+
+	/**
 	 * The Constructor.
 	 *
 	 * @since  1.0.0
 	 */
 	public function __construct() {
 
-		$this->options             = get_option( 'tss_options' );
+		$this->options = get_option( 'tss_options' );
+
 		$this->plugin_display_name = __( 'Toptal Social Share', 'toptal-social-share' );
-		$this->social_networks     = array( 'Facebook' , 'Twitter', 'Google+', 'Pinterest', 'LinkedIn', 'WhatsApp' );
+
+		$this->social_networks = array( 'Facebook' , 'Twitter', 'Google+', 'Pinterest', 'LinkedIn', 'WhatsApp' );
+
+		$this->buttons_classes = array(
+			'Facebook'  => 'facebook',
+			'Twitter'   => 'twitter',
+			'Google+'   => 'google-plus',
+			'Pinterest' => 'pinterest',
+			'LinkedIn'  => 'linkedin',
+			'WhatsApp'  => 'whatsapp'
+		);
+
+		$this->icons_classes = array(
+			'Facebook'  => 'icon-facebook',
+			'Twitter'   => 'icon-twitter',
+			'Google+'   => 'icon-google-plus',
+			'Pinterest' => 'icon-pinterest',
+			'LinkedIn'  => 'icon-linkedin',
+			'WhatsApp'  => 'icon-whatsapp'
+		);
 	}
 
 	/**
@@ -263,7 +297,17 @@ class Toptal_Social_Share {
 		<fieldset>
 			<ul id="tss-sortable-networks">
 				<?php foreach ( $this->social_networks as $network ) : ?>
-					<li data-network="<?php echo $network; ?>"><label><input type="checkbox" name="tss_options[activated_networks][<?php echo $network; ?>]" value="1" <?php checked( 1, $activated_networks[$network], true ); ?>><?php echo esc_html( $network ); ?><?php echo $network == "WhatsApp" ? ' (mobile devices only)' : ''; ?></label></li>
+					<li data-network="<?php echo $network; ?>">
+						<label>
+							<span class="social-icon <?php echo esc_attr( $this->buttons_classes[$network] ); ?>">
+								<i class="<?php echo esc_attr( $this->icons_classes[$network] ); ?>"></i>
+							</span>
+							<input type="checkbox" name="tss_options[activated_networks][<?php echo $network; ?>]" value="1" <?php checked( 1, $activated_networks[$network], true ); ?>>
+							<span>
+								<?php echo esc_html( $network ); ?><?php echo $network == "WhatsApp" ? ' (mobile devices only)' : ''; ?>
+							</span>
+						</label>
+					</li>
 				<?php endforeach; ?>
 			</ul>
 			<p class="description">Drag and drop the items to change the order of appearance.</p>
@@ -794,6 +838,16 @@ class Toptal_Social_Share {
 		if ( 'settings_page_' . TSS_SOCIAL_SHARE_SLUG == $hook ) {
 
 			wp_enqueue_style( 'wp-color-picker' );
+
+			wp_enqueue_style(
+				'tss-css',
+				TSS_SOCIAL_SHARE_URL . '/css/admin.css'
+			);
+
+			wp_enqueue_style(
+				'tss-icons-admin',
+				TSS_SOCIAL_SHARE_URL . '/css/icons.css'
+			);
 
 			wp_enqueue_script(
 				'tss-admin-js',
