@@ -263,7 +263,7 @@ class Toptal_Social_Share {
 		<fieldset>
 			<ul id="tss-sortable-networks">
 				<?php foreach ( $this->social_networks as $network ) : ?>
-					<li data-network="<?php echo $network; ?>"><label><input type="checkbox" name="tss_options[activated_networks][<?php echo $network; ?>]" value="1" <?php checked( 1, $activated_networks[$network], true ); ?>><?php echo esc_html( $network ); ?></label></li>
+					<li data-network="<?php echo $network; ?>"><label><input type="checkbox" name="tss_options[activated_networks][<?php echo $network; ?>]" value="1" <?php checked( 1, $activated_networks[$network], true ); ?>><?php echo esc_html( $network ); ?><?php echo $network == "WhatsApp" ? ' (mobile devices only)' : ''; ?></label></li>
 				<?php endforeach; ?>
 			</ul>
 			<p class="description">Drag and drop the items to change the order of appearance.</p>
@@ -553,7 +553,7 @@ class Toptal_Social_Share {
 						urlencode( $title )
 					);
 
-				} elseif ( $network == 'WhatsApp' ) {
+				} elseif ( $network == 'WhatsApp' && wp_is_mobile() ) {
 					$class = 'whatsapp';
 					$icon_class = 'icon-whatsapp';
 
@@ -563,6 +563,8 @@ class Toptal_Social_Share {
 						urlencode( $permalink )
 					);
 					$extra_attr = 'data-action="'. esc_attr( 'share/whatsapp/share' ) . '"';
+				} else {
+					continue;
 				}
 
 				?>
