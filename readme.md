@@ -1,5 +1,5 @@
 # Toptal Social Share #
-**Contributors:** roosalles
+**Contributors:** Rodrigo Salles
 **Tags:** social, share, facebook, twitter, pinterest, google+, linkedin, whatsapp
 **Requires at least:** 4.0
 **Tested up to:** 4.7.4
