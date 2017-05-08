@@ -32,14 +32,14 @@ class Toptal_Social_Share {
 	 *
 	 * @since  1.0.0
 	 */
-	private $buttons_classes;
+	private $button_classes;
 
 	/**
 	 * The Icons CSS Classes.
 	 *
 	 * @since  1.0.0
 	 */
-	private $icons_classes;
+	private $icon_classes;
 
 	/**
 	 * The Constructor.
@@ -54,7 +54,7 @@ class Toptal_Social_Share {
 
 		$this->social_networks = array( 'Facebook' , 'Twitter', 'Google+', 'Pinterest', 'LinkedIn', 'WhatsApp' );
 
-		$this->buttons_classes = array(
+		$this->button_classes = array(
 			'Facebook'  => 'facebook',
 			'Twitter'   => 'twitter',
 			'Google+'   => 'google-plus',
@@ -63,7 +63,7 @@ class Toptal_Social_Share {
 			'WhatsApp'  => 'whatsapp'
 		);
 
-		$this->icons_classes = array(
+		$this->icon_classes = array(
 			'Facebook'  => 'icon-facebook',
 			'Twitter'   => 'icon-twitter',
 			'Google+'   => 'icon-google-plus',
@@ -274,13 +274,11 @@ class Toptal_Social_Share {
 		$public_post_types = $this->get_public_post_types();
 
 		?>
-
 		<fieldset>
 			<?php foreach ( $public_post_types as $key => $value ) : ?>
 				<label style="margin-right: 40px !important;"><input type="checkbox" name="tss_options[post_types][<?php echo $key; ?>]" value="1" <?php checked( 1, $selected_post_types[$key], true ); ?>><?php echo esc_html( $value ); ?></label>
 			<?php endforeach; ?>
 		</fieldset>
-
 		<?php
 	}
 
@@ -301,14 +299,13 @@ class Toptal_Social_Share {
 		$activated_networks = $options['activated_networks'];
 
 		?>
-
 		<fieldset>
 			<ul id="tss-sortable-networks">
 				<?php foreach ( $this->social_networks as $network ) : ?>
 					<li data-network="<?php echo $network; ?>">
 						<label>
-							<span class="social-icon <?php echo esc_attr( $this->buttons_classes[$network] ); ?>">
-								<i class="<?php echo esc_attr( $this->icons_classes[$network] ); ?>"></i>
+							<span class="social-icon <?php echo esc_attr( $this->button_classes[$network] ); ?>">
+								<i class="<?php echo esc_attr( $this->icon_classes[$network] ); ?>"></i>
 							</span>
 							<input type="checkbox" name="tss_options[activated_networks][<?php echo $network; ?>]" value="1" <?php checked( 1, $activated_networks[$network], true ); ?>>
 							<span>
@@ -320,7 +317,6 @@ class Toptal_Social_Share {
 			</ul>
 			<p class="description">Drag and drop the items to change the order of appearance.</p>
 		</fieldset>
-
 		<?php
 	}
 
@@ -336,13 +332,11 @@ class Toptal_Social_Share {
 		$current_size = $options['icons_size'];
 
 		?>
-
 		<fieldset>
 			<label><input type="radio" name="tss_options[icons_size]" value="small" <?php checked( 'small', $current_size, true ); ?>>Small</label><br>
 			<label><input type="radio" name="tss_options[icons_size]" value="medium" <?php checked( 'medium', $current_size, true ); ?>>Medium</label><br>
 			<label><input type="radio" name="tss_options[icons_size]" value="large" <?php checked( 'large', $current_size, true ); ?>>Large</label>
 		</fieldset>
-
 		<?php
 	}
 
@@ -358,12 +352,10 @@ class Toptal_Social_Share {
 		$current_option = $options['use_custom_color'];
 
 		?>
-
 		<fieldset>
 			<label><input type="checkbox" id="tss-use-custom-color-field" name="tss_options[use_custom_color]" value="1" <?php checked( 1, $current_option, true ); ?>>Set custom color</label>
 			<p class="description">Check this option to override default colors with a custom one.</p>
 		</fieldset>
-
 		<?php
 	}
 
@@ -407,14 +399,12 @@ class Toptal_Social_Share {
 		$current_positions = $options['icons_position'];
 
 		?>
-
 		<fieldset>
 			<label><input type="checkbox" name="tss_options[icons_position][below_title]" value="1" <?php checked( 1, $current_positions['below_title'], true ); ?>><?php echo __( 'Display social share icons below the title', 'toptal-social-share' ); ?></label><br>
 			<label><input type="checkbox" name="tss_options[icons_position][floating_left]" value="1" <?php checked( 1, $current_positions['floating_left'], true ); ?>><?php echo __( 'Display social share floating on the left of the page', 'toptal-social-share' ); ?></label><br>
 			<label><input type="checkbox" name="tss_options[icons_position][after_content]" value="1" <?php checked( 1, $current_positions['after_content'], true ); ?>><?php echo __( 'Display social share after the content', 'toptal-social-share' ); ?></label><br>
 			<label><input type="checkbox" name="tss_options[icons_position][featured_image]" value="1" <?php checked( 1, $current_positions['featured_image'], true ); ?>><?php echo __( 'Display social share icons inside featured image', 'toptal-social-share' ); ?></label>
 		</fieldset>
-
 		<?php
 		}
 
@@ -551,7 +541,6 @@ class Toptal_Social_Share {
 
 		ob_start();
 		?>
-
 		<div class="tss-share-buttons <?php echo esc_attr( $extra_classes ); ?> <?php echo esc_attr( $style_classes ); ?>">
 			<?php foreach ( $networks as $network => $value ) : ?>
 				<?php
@@ -560,8 +549,6 @@ class Toptal_Social_Share {
 				$extra_attr = '';
 
 				if ( $network == 'Facebook' ) {
-					$class = 'facebook';
-					$icon_class = 'icon-facebook';
 
 					// https://developers.facebook.com/docs/plugins/share-button/#example
 					$share_link = sprintf(
@@ -571,8 +558,6 @@ class Toptal_Social_Share {
 					);
 
 				} elseif ( $network == 'Twitter' ) {
-					$class = 'twitter';
-					$icon_class = 'icon-twitter';
 
 					// https://dev.twitter.com/web/tweet-button
 					$share_link = sprintf(
@@ -582,8 +567,6 @@ class Toptal_Social_Share {
 					);
 
 				} elseif ( $network == 'Google+' ) {
-					$class = 'google-plus';
-					$icon_class = 'icon-google-plus';
 
 					// https://developers.google.com/+/web/share/
 					$share_link = sprintf(
@@ -592,16 +575,12 @@ class Toptal_Social_Share {
 					);
 
 				} elseif ( $network == 'Pinterest' ) {
-					$class = 'pinterest';
-					$icon_class = 'icon-pinterest';
 
 					// https://developers.pinterest.com/docs/widgets/save/?
 					$share_link = TSS_PINTEREST_URL;
 					$extra_attr = 'data-pin-do="buttonBookmark" data-pin-custom="true"';
 
 				} elseif ( $network == 'LinkedIn' ) {
-					$class = 'linkedin';
-					$icon_class = 'icon-linkedin';
 
 					// https://developer.linkedin.com/docs/share-on-linkedin
 					$share_link = sprintf(
@@ -611,8 +590,6 @@ class Toptal_Social_Share {
 					);
 
 				} elseif ( $network == 'WhatsApp' && wp_is_mobile() ) {
-					$class = 'whatsapp';
-					$icon_class = 'icon-whatsapp';
 
 					// http://stackoverflow.com/questions/21935149/sharing-link-on-whatsapp-from-mobile-website-not-application-for-android
 					$share_link = sprintf(
@@ -625,8 +602,8 @@ class Toptal_Social_Share {
 				}
 
 				?>
-				<a href="<?php echo $share_link; ?>" <?php echo $extra_attr; ?> rel="nofollow" class="share-button <?php echo esc_attr( $class ); ?>" style="<?php echo esc_attr( $custom_color_style ); ?>">
-					<i class="<?php echo esc_attr( $icon_class ); ?>"></i>
+				<a href="<?php echo $share_link; ?>" <?php echo $extra_attr; ?> rel="nofollow" class="share-button <?php echo esc_attr( $this->button_classes[$network] ); ?>" style="<?php echo esc_attr( $custom_color_style ); ?>">
+					<i class="<?php echo esc_attr( $this->icon_classes[$network] ); ?>"></i>
 				</a>
 			<?php endforeach; ?>
 
