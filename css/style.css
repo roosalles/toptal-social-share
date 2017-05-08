@@ -10,7 +10,7 @@
 	border: none;
 	float: left;
 	color: #fff;
-	transition: background-color 0.3s ease;
+	transition: color 0.3s ease, background-color 0.3s ease;
 	box-shadow: none;
 	cursor: pointer;
 	margin: 0;
@@ -72,6 +72,11 @@
 
 .tss-share-buttons .share-button.whatsapp:hover {
 	background-color: #19773c;
+}
+
+.tss-share-buttons.custom-colors .share-button:hover {
+	color: #fff !important;
+	background-color: #000 !important;
 }
 
 /* Icon sizes */

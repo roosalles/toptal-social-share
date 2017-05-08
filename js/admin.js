@@ -18,10 +18,11 @@ jQuery( document ).ready( function( $ ) {
 	
 	// Execute wpColorPicker for all color picker fields
 	$( '#tss-color-picker' ).wpColorPicker();
+	$( '#tss-bg-color-picker' ).wpColorPicker();
 	
 	// Show/Hide Color picker on user selection/click
 	$( '#tss-use-custom-color-field' ).on( 'click', function() {
-		$( '#tss-color-picker-wrapper' ).toggle();
+		$( '#tss-color-picker-wrapper' ).slideToggle();
 	});
 	
 });

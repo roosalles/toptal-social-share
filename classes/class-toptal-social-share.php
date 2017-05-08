@@ -231,6 +231,14 @@ class Toptal_Social_Share {
 		);
 
 		add_settings_field(
+			'icons_custom__background_color',
+			null,
+			function(){},
+			TSS_SOCIAL_SHARE_SLUG,
+			'tss_social_icons_settings_section'
+		);
+
+		add_settings_field(
 			'icons_position',
 			__( 'Icons Position', 'toptal-social-share' ),
 			array( $this, 'render_field_icons_position' ),
@@ -367,19 +375,23 @@ class Toptal_Social_Share {
 	public function render_field_icons_custom_color() {
 
 		// Get current options
-		$options = get_option( 'tss_options' );
+		$options          = get_option( 'tss_options' );
 		$use_custom_color = $options['use_custom_color'];
-		$custom_color = $options['icons_custom_color'];
+		$custom_color     = $options['icons_custom_color'];
+		$custom_bg_color  = $options['icons_custom_background_color'];
 
 		// Show color picker only when option is selected
 		$style = ! $use_custom_color ? ' style="display: none;"' : '';
 
 		?>
-
 		<fieldset id="tss-color-picker-wrapper"<?php echo $style; ?>>
-			<input type="text" id="tss-color-picker" name="tss_options[icons_custom_color]" value="<?php echo $custom_color; ?>" />
+			<div>
+				<label>Icons Color:</label><input type="text" id="tss-color-picker" name="tss_options[icons_custom_color]" value="<?php echo $custom_color; ?>" />
+			</div>
+			<div>
+				<label>Background Color:</label><input type="text" id="tss-bg-color-picker" name="tss_options[icons_custom_background_color]" value="<?php echo $custom_bg_color; ?>" />
+			</div>
 		</fieldset>
-
 		<?php
 	}
 
@@ -498,12 +510,12 @@ class Toptal_Social_Share {
 		$icons_size       = $options['icons_size'];
 		$use_custom_color = $options['use_custom_color'];
 		$custom_color     = $options['icons_custom_color'];
+		$custom_bg_color  = $options['icons_custom_background_color'];
 
 		// Bail if no network is active
 		if ( ! $networks ) {
 			return;
 		}
-
 
 		if ( is_front_page() && ! in_the_loop() ) {
 
@@ -529,17 +541,18 @@ class Toptal_Social_Share {
 		}
 
 		// Share buttons style
-		$style = $icons_size . ' ';
+		$style_classes = $icons_size . ' ';
 
 		// Custom color
 		if ( $use_custom_color ) {
-			$custom_color_style = 'background-color: #fff; color: ' . $custom_color;
+			$custom_color_style = 'background-color: ' . $custom_bg_color . '; color: ' . $custom_color;
+			$style_classes .= 'custom-colors';
 		}
 
 		ob_start();
 		?>
 
-		<div class="tss-share-buttons <?php echo esc_attr( $extra_classes ); ?> <?php echo esc_attr( $style ); ?>">
+		<div class="tss-share-buttons <?php echo esc_attr( $extra_classes ); ?> <?php echo esc_attr( $style_classes ); ?>">
 			<?php foreach ( $networks as $network => $value ) : ?>
 				<?php
 				// Init variables
@@ -771,7 +784,8 @@ class Toptal_Social_Share {
 
 			$use_custom_color = 0;
 
-			$custom_color = '#000';
+			$custom_color    = '#ccc';
+			$custom_bg_color = '#565656';
 
 			$icons_position = array(
 				'below_title'    => 1,
@@ -782,13 +796,14 @@ class Toptal_Social_Share {
 			update_option(
 				'tss_options',
 				array(
-					'post_types'         => $post_types,
-					'activated_networks' => $activated_networks,
-					'ordered_networks'   => $ordered_networks,
-					'icons_size'         => $icons_size,
-					'use_custom_color'   => $use_custom_color,
-					'icons_custom_color' => $custom_color,
-					'icons_position'     => $icons_position
+					'post_types'                    => $post_types,
+					'activated_networks'            => $activated_networks,
+					'ordered_networks'              => $ordered_networks,
+					'icons_size'                    => $icons_size,
+					'use_custom_color'              => $use_custom_color,
+					'icons_custom_color'            => $custom_color,
+					'icons_custom_background_color' => $custom_bg_color,
+					'icons_position'                => $icons_position
 				)
 			);
 		}

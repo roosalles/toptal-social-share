@@ -34,3 +34,8 @@
 .social-icon.whatsapp {
 	background-color: #25d366;
 }
+
+#tss-color-picker-wrapper label {
+	vertical-align: top;
+    width: 150px;
+}
