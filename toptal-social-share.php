@@ -23,11 +23,11 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Define our constants
-define( 'TSS_SOCIAL_SHARE_VERSION', '1.0.0' );
-define( 'TSS_SOCIAL_SHARE_SLUG', 'toptal-social-share' );
-define( 'TSS_SOCIAL_SHARE_PATH', plugin_dir_path( __FILE__ ) );
-define( 'TSS_SOCIAL_SHARE_URL', plugin_dir_url( __FILE__ ) );
-define( 'TSS_SOCIAL_SHARE_BASENAME', plugin_basename( __FILE__ ) );
+define( 'TSS_VERSION', '1.0.0' );
+define( 'TSS_SLUG', 'toptal-social-share' );
+define( 'TSS_PATH', plugin_dir_path( __FILE__ ) );
+define( 'TSS_URL', plugin_dir_url( __FILE__ ) );
+define( 'TSS_BASENAME', plugin_basename( __FILE__ ) );
 
 // Social Networks share urls
 define( 'TSS_FACEBOOK_URL', 'https://www.facebook.com/sharer.php' );
@@ -38,7 +38,7 @@ define( 'TSS_PINTEREST_URL', 'https://www.pinterest.com/pin/create/button/' );
 define( 'TSS_WHATSAPP_URL', 'whatsapp://send' );
 
 // Include the main plugin class.
-require_once TSS_SOCIAL_SHARE_PATH . 'classes/class-toptal-social-share.php';
+require_once TSS_PATH . 'classes/class-toptal-social-share.php';
 
 /**
  * Set the default values on plugin activation.
