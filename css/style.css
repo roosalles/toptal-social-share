@@ -17,6 +17,10 @@
 	letter-spacing: normal;
 }
 
+.tss-share-buttons a.share-button:link {
+	text-decoration: none;
+}
+
 .tss-share-buttons a.share-button:hover {
     color: #fff;
 }
@@ -80,7 +84,8 @@
 }
 
 /* Icon sizes */
-.tss-share-buttons.small {
+.tss-share-buttons.small a,
+.tss-share-buttons.small i {
 	font-size: 16px !important;
 }
 
@@ -88,7 +93,8 @@
 	padding: 4px 7px 1px;
 }
 
-.tss-share-buttons.medium {
+.tss-share-buttons.medium a,
+.tss-share-buttons.medium i {
 	font-size: 32px !important;
 }
 
@@ -96,7 +102,8 @@
 	padding: 5px 10px 2px;
 }
 
-.tss-share-buttons.large {
+.tss-share-buttons.large a,
+.tss-share-buttons.large i {
 	font-size: 48px !important;
 }
 
