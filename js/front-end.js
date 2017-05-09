@@ -70,6 +70,13 @@ jQuery( document ).ready( function( $ ) {
 		});		
 	}
 	
+	// Remove buttons from some commons spots it should not appear
+	$( 'nav .tss-share-buttons' ).remove();
+	$( '#comments .tss-share-buttons').remove();
+	$( '.comments-area .tss-share-buttons').remove();
+	$( '.edit-link .tss-share-buttons' ).remove();
+	$( '.post-edit-link .tss-share-buttons' ).remove();
+	
 });
 
 // Helper function to open popup centered

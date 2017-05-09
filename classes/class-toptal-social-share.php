@@ -451,14 +451,7 @@ class Toptal_Social_Share {
 
 		// Add hook to display share icons below title
 		if ( $position['below_title'] && array_key_exists( $post_type, $post_types ) ) {
-
-			add_filter( 'the_post', array( $this, 'load_hooks_for_below_title' ), 10, 1 );
-
-// 			if ( is_single() || is_page() ) {
-// 				add_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
-// 			} else {
-// 				add_filter( 'the_post', array( $this, 'load_hooks_for_below_title' ), 10, 1 );
-// 			}
+			add_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
 		}
 
 		// Add hook to display share icons after content
@@ -475,16 +468,6 @@ class Toptal_Social_Share {
 		if ( $position['floating_left'] && array_key_exists( $post_type, $post_types ) ) {
 			add_action( 'wp_head', array( $this, 'render_buttons_floating_left' ) );
 		}
-	}
-
-	/**
-	 * Load hooks for Displaying button below title
-	 *
-	 * @since   1.0.0
-	 */
-	public function load_hooks_for_below_title( $post ) {
-
-		add_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
 	}
 
 	/**
@@ -606,10 +589,9 @@ class Toptal_Social_Share {
 					<i class="<?php echo esc_attr( $this->icon_classes[$network] ); ?>"></i>
 				</a>
 			<?php endforeach; ?>
-
 		</div>
-
 		<?php
+
 		return ob_get_clean();
 	}
 
@@ -630,12 +612,23 @@ class Toptal_Social_Share {
 	 */
 	public function render_buttons_below_title( $title, $id ) {
 
+		$backtrace = debug_backtrace();
+
+		// Do not add buttons when filters are called from some known functions
+		foreach ( $backtrace as $bt ) {
+			if( $bt['function'] == 'comments_template' ||
+				$bt['function'] == 'the_post_navigation' ||
+				$bt['function'] == 'edit_post_link' ||
+				$bt['function'] == 'get_edit_post_link' ||
+				$bt['function'] == 'the_title_attribute' ||
+				$bt['function'] == 'twentyseventeen_edit_link' ) {
+				return $title;
+			}
+		}
+
 		if ( in_the_loop() && is_main_query() && ! empty( $title ) ) {
 			$buttons = $this->render_buttons();
 			$title = $title . $buttons;
-
-			// Remove our filter after it's applied (in order to only apply in the main post title)
-			remove_filter( 'the_title', array( $this, 'render_buttons_below_title' ), 10, 2 );
 		}
 
 		return $title;

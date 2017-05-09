@@ -21,13 +21,14 @@
 	text-decoration: none;
 }
 
-.tss-share-buttons a.share-button:hover {
-    color: #fff;
-}
-
 .tss-share-buttons a.share-button:focus {
    outline: none;
-   color: #fff;
+}
+
+.tss-share-buttons a.share-button:hover,
+.tss-share-buttons a.share-button:focus,
+.tss-share-buttons a.share-button:visited {
+    color: #fff;
 }
 
 .tss-share-buttons .share-button.facebook {
