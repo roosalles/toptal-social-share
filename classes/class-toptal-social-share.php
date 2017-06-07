@@ -460,12 +460,12 @@ class Toptal_Social_Share {
 		}
 
 		// Add hook to display share icons inside featured image
-		if ( $position['featured_image'] && array_key_exists( $post_type, $post_types ) ) {
+		if ( isset( $position['featured_image'] ) && $position['featured_image'] && array_key_exists( $post_type, $post_types ) ) {
 			add_filter( 'post_thumbnail_html', array( $this, 'render_buttons_featured_image' ), 10, 1 );
 		}
 
 		// Float share bar left side
-		if ( $position['floating_left'] && array_key_exists( $post_type, $post_types ) ) {
+		if ( isset( $position['floating_left'] ) && $position['floating_left'] && array_key_exists( $post_type, $post_types ) ) {
 			add_action( 'wp_head', array( $this, 'render_buttons_floating_left' ) );
 		}
 	}
@@ -585,7 +585,7 @@ class Toptal_Social_Share {
 				}
 
 				?>
-				<a href="<?php echo $share_link; ?>" <?php echo $extra_attr; ?> rel="nofollow" class="share-button <?php echo esc_attr( $this->button_classes[$network] ); ?>" style="<?php echo esc_attr( $custom_color_style ); ?>">
+				<a href="<?php echo $share_link; ?>" <?php echo $extra_attr; ?> rel="nofollow" class="share-button <?php echo esc_attr( $this->button_classes[$network] ); ?>" style="<?php if ( isset( $custom_color_style ) ) echo esc_attr( $custom_color_style ); ?>">
 					<i class="<?php echo esc_attr( $this->icon_classes[$network] ); ?>"></i>
 				</a>
 			<?php endforeach; ?>
