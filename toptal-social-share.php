@@ -22,14 +22,14 @@ if ( ! defined( 'WPINC' ) ) {
 	die();
 }
 
-// Define our constants
+// Define our constants.
 define( 'TSS_VERSION', '1.0.0' );
 define( 'TSS_SLUG', 'toptal-social-share' );
 define( 'TSS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'TSS_URL', plugin_dir_url( __FILE__ ) );
 define( 'TSS_BASENAME', plugin_basename( __FILE__ ) );
 
-// Social Networks share urls
+// Social Networks share urls.
 define( 'TSS_FACEBOOK_URL', 'https://www.facebook.com/sharer.php' );
 define( 'TSS_TWITTER_URL', 'https://twitter.com/intent/tweet' );
 define( 'TSS_GOOGLEPLUS_URL', 'https://plus.google.com/share' );
