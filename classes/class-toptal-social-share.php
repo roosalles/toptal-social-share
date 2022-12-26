@@ -50,7 +50,7 @@ class Toptal_Social_Share {
 
 		$this->options = get_option( 'tss_options' );
 
-		$this->plugin_display_name = __( 'Toptal Social Share', TSS_SLUG );
+		$this->plugin_display_name = __( 'Toptal Social Share', 'toptal-social-share' );
 
 		$this->social_networks = array( 'Facebook' , 'Twitter', 'Google+', 'Pinterest', 'LinkedIn', 'WhatsApp' );
 
@@ -112,7 +112,7 @@ class Toptal_Social_Share {
 	 */
 	public function load_text_domain() {
 
-		load_plugin_textdomain( TSS_SLUG, FALSE, dirname( TSS_BASENAME ) . '/languages' );
+		load_plugin_textdomain( 'toptal-social-share', false, dirname( TSS_BASENAME ) . '/languages' );
 	}
 
 	/**
@@ -167,14 +167,14 @@ class Toptal_Social_Share {
 		//
 		add_settings_section(
 			'tss_general_settings_section',
-			__( 'General Settings', TSS_SLUG ),
+			__( 'General Settings', 'toptal-social-share' ),
 			array( $this, 'render_settings_section' ),
 			TSS_SLUG
 		);
 
 		add_settings_field(
 			'post_types',
-			__( 'Display Social Share bar on', TSS_SLUG ),
+			__( 'Display Social Share bar on', 'toptal-social-share' ),
 			array( $this, 'render_field_post_types' ),
 			TSS_SLUG,
 			'tss_general_settings_section'
@@ -182,7 +182,7 @@ class Toptal_Social_Share {
 
 		add_settings_field(
 			'activated_networks',
-			__( 'Select active Networks', TSS_SLUG ),
+			__( 'Select active Networks', 'toptal-social-share' ),
 			array( $this, 'render_field_activated_networks' ),
 			TSS_SLUG,
 			'tss_general_settings_section'
@@ -201,14 +201,14 @@ class Toptal_Social_Share {
 		//
 		add_settings_section(
 			'tss_social_icons_settings_section',
-			__( 'Social Icons Settings', TSS_SLUG ),
+			__( 'Social Icons Settings', 'toptal-social-share' ),
 			array( $this, 'render_settings_section' ),
 			TSS_SLUG
 		);
 
 		add_settings_field(
 			'icons_size',
-			__( 'Icons size', TSS_SLUG ),
+			__( 'Icons size', 'toptal-social-share' ),
 			array( $this, 'render_field_icons_size' ),
 			TSS_SLUG,
 			'tss_social_icons_settings_section'
@@ -216,7 +216,7 @@ class Toptal_Social_Share {
 
 		add_settings_field(
 			'use_custom_color',
-			__( 'Icons color', TSS_SLUG ),
+			__( 'Icons color', 'toptal-social-share' ),
 			array( $this, 'render_field_use_custom_color' ),
 			TSS_SLUG,
 			'tss_social_icons_settings_section'
@@ -240,7 +240,7 @@ class Toptal_Social_Share {
 
 		add_settings_field(
 			'icons_position',
-			__( 'Icons position', TSS_SLUG ),
+			__( 'Icons position', 'toptal-social-share' ),
 			array( $this, 'render_field_icons_position' ),
 			TSS_SLUG,
 			'tss_social_icons_settings_section'
@@ -309,13 +309,13 @@ class Toptal_Social_Share {
 							</span>
 							<input type="checkbox" name="tss_options[activated_networks][<?php echo $network; ?>]" value="1" <?php checked( 1, $activated_networks[$network], true ); ?>>
 							<span>
-								<?php echo esc_html( $network ); ?><?php echo $network == "WhatsApp" ? ' ' . __( '(mobile devices only)', TSS_SLUG ) : ''; ?>
+								<?php echo esc_html( $network ); ?><?php echo 'WhatsApp' === $network ? ' ' . __( '(mobile devices only)', 'toptal-social-share' ) : ''; ?>
 							</span>
 						</label>
 					</li>
 				<?php endforeach; ?>
 			</ul>
-			<p class="description"><?php echo __( 'Drag and drop the items to change the order of appearance.', TSS_SLUG ); ?></p>
+			<p class="description"><?php echo __( 'Drag and drop the items to change the order of appearance.', 'toptal-social-share' ); ?></p>
 		</fieldset>
 		<?php
 	}
@@ -333,9 +333,9 @@ class Toptal_Social_Share {
 
 		?>
 		<fieldset>
-			<label><input type="radio" name="tss_options[icons_size]" value="small" <?php checked( 'small', $current_size, true ); ?>><?php echo __( 'Small', TSS_SLUG ); ?></label><br>
-			<label><input type="radio" name="tss_options[icons_size]" value="medium" <?php checked( 'medium', $current_size, true ); ?>><?php echo __( 'Medium', TSS_SLUG ); ?></label><br>
-			<label><input type="radio" name="tss_options[icons_size]" value="large" <?php checked( 'large', $current_size, true ); ?>><?php echo __( 'Large', TSS_SLUG ); ?></label>
+			<label><input type="radio" name="tss_options[icons_size]" value="small" <?php checked( 'small', $current_size, true ); ?>><?php echo __( 'Small', 'toptal-social-share' ); ?></label><br>
+			<label><input type="radio" name="tss_options[icons_size]" value="medium" <?php checked( 'medium', $current_size, true ); ?>><?php echo __( 'Medium', 'toptal-social-share' ); ?></label><br>
+			<label><input type="radio" name="tss_options[icons_size]" value="large" <?php checked( 'large', $current_size, true ); ?>><?php echo __( 'Large', 'toptal-social-share' ); ?></label>
 		</fieldset>
 		<?php
 	}
@@ -353,8 +353,8 @@ class Toptal_Social_Share {
 
 		?>
 		<fieldset>
-			<label><input type="checkbox" id="tss-use-custom-color-field" name="tss_options[use_custom_color]" value="1" <?php checked( 1, $current_option, true ); ?>><?php echo __( 'Select custom colors', TSS_SLUG ); ?></label>
-			<p class="description"><?php echo __( 'Check this option to override default colors with custom ones.', TSS_SLUG ); ?></p>
+			<label><input type="checkbox" id="tss-use-custom-color-field" name="tss_options[use_custom_color]" value="1" <?php checked( 1, $current_option, true ); ?>><?php echo __( 'Select custom colors', 'toptal-social-share' ); ?></label>
+			<p class="description"><?php echo __( 'Check this option to override default colors with custom ones.', 'toptal-social-share' ); ?></p>
 		</fieldset>
 		<?php
 	}
@@ -378,10 +378,10 @@ class Toptal_Social_Share {
 		?>
 		<fieldset id="tss-color-picker-wrapper"<?php echo $style; ?>>
 			<div>
-				<label><?php echo __( 'Icons Color:', TSS_SLUG ); ?></label><input type="text" id="tss-color-picker" name="tss_options[icons_custom_color]" value="<?php echo $custom_color; ?>" />
+				<label><?php echo __( 'Icons Color:', 'toptal-social-share' ); ?></label><input type="text" id="tss-color-picker" name="tss_options[icons_custom_color]" value="<?php echo $custom_color; ?>" />
 			</div>
 			<div>
-				<label><?php echo __( 'Background Color:', TSS_SLUG ); ?></label><input type="text" id="tss-bg-color-picker" name="tss_options[icons_custom_background_color]" value="<?php echo $custom_bg_color; ?>" />
+				<label><?php echo __( 'Background Color:', 'toptal-social-share' ); ?></label><input type="text" id="tss-bg-color-picker" name="tss_options[icons_custom_background_color]" value="<?php echo $custom_bg_color; ?>" />
 			</div>
 		</fieldset>
 		<?php
@@ -400,10 +400,10 @@ class Toptal_Social_Share {
 
 		?>
 		<fieldset>
-			<label><input type="checkbox" name="tss_options[icons_position][below_title]" value="1" <?php checked( 1, $current_positions['below_title'], true ); ?>><?php echo __( 'Display social share icons below the title', TSS_SLUG ); ?></label><br>
-			<label><input type="checkbox" name="tss_options[icons_position][floating_left]" value="1" <?php checked( 1, $current_positions['floating_left'], true ); ?>><?php echo __( 'Display social share icons floating on the left of the page', TSS_SLUG ); ?></label><br>
-			<label><input type="checkbox" name="tss_options[icons_position][after_content]" value="1" <?php checked( 1, $current_positions['after_content'], true ); ?>><?php echo __( 'Display social share icons after the content', TSS_SLUG ); ?></label><br>
-			<label><input type="checkbox" name="tss_options[icons_position][featured_image]" value="1" <?php checked( 1, $current_positions['featured_image'], true ); ?>><?php echo __( 'Display social share icons inside featured image', TSS_SLUG ); ?></label>
+			<label><input type="checkbox" name="tss_options[icons_position][below_title]" value="1" <?php checked( 1, $current_positions['below_title'], true ); ?>><?php echo __( 'Display social share icons below the title', 'toptal-social-share' ); ?></label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][floating_left]" value="1" <?php checked( 1, $current_positions['floating_left'], true ); ?>><?php echo __( 'Display social share icons floating on the left of the page', 'toptal-social-share' ); ?></label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][after_content]" value="1" <?php checked( 1, $current_positions['after_content'], true ); ?>><?php echo __( 'Display social share icons after the content', 'toptal-social-share' ); ?></label><br>
+			<label><input type="checkbox" name="tss_options[icons_position][featured_image]" value="1" <?php checked( 1, $current_positions['featured_image'], true ); ?>><?php echo __( 'Display social share icons inside featured image', 'toptal-social-share' ); ?></label>
 		</fieldset>
 		<?php
 		}
@@ -656,7 +656,7 @@ class Toptal_Social_Share {
 
 		if ( ! empty( $html ) ) {
 			$buttons = $this->render_buttons();
-			$html = '<div class="tss-featured-image-container">' . $html . '<span class="tss-featured-image-toggle">' . __( 'Share', TSS_SLUG ) . '</span>' . $buttons . '</div>';
+			$html    = '<div class="tss-featured-image-container">' . $html . '<span class="tss-featured-image-toggle">' . __( 'Share', 'toptal-social-share' ) . '</span>' . $buttons . '</div>';
 		}
 
 		return $html;
@@ -698,8 +698,8 @@ class Toptal_Social_Share {
 
 		// Manually add 'post' and 'page' types.
 		$default_post_types = array(
-			'post' => __( 'Posts', TSS_SLUG ),
-			'page' => __( 'Pages', TSS_SLUG ),
+			'post' => __( 'Posts', 'toptal-social-share' ),
+			'page' => __( 'Pages', 'toptal-social-share' ),
 		);
 
 		$post_types = $default_post_types + $formatted_cpts;
@@ -853,7 +853,7 @@ class Toptal_Social_Share {
 	 */
 	public function plugins_page_action_links( $links ) {
 
-		$links[] = '<a href="'. get_admin_url( null, 'options-general.php?page=' . TSS_SLUG ) .'">' . __( 'Settings', TSS_SLUG ) . '</a>';
+		$links[] = '<a href="' . get_admin_url( null, 'options-general.php?page=' . TSS_SLUG ) . '">' . __( 'Settings', 'toptal-social-share' ) . '</a>';
 
 		return $links;
 	}
