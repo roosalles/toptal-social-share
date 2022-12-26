@@ -483,8 +483,17 @@ class Toptal_Social_Share {
 
 		// Float share bar left side.
 		if ( isset( $position['floating_left'] ) && $position['floating_left'] && array_key_exists( $post_type, $post_types ) ) {
-			add_action( 'wp_head', array( $this, 'render_buttons_floating_left' ) );
+			add_action( 'wp_body_open', array( $this, 'render_buttons_floating_left' ) );
 		}
+
+		// Output OG Tags. Allow devs to disable OG tags via custom filter.
+		if ( apply_filters( 'toptal_social_share_display_og_tags', true ) ) {
+
+			if ( is_page() || is_single() ) {
+				add_action( 'wp_head', array( $this, 'render_og_meta_tags' ) );
+			}
+		}
+
 	}
 
 	/**
@@ -577,9 +586,8 @@ class Toptal_Social_Share {
 
 					// Reference: https://developer.linkedin.com/docs/share-on-linkedin.
 					$share_link = sprintf(
-						TSS_LINKEDIN_URL . '?url=%s&mini=true&title=%s&summary=',
-						rawurlencode( $permalink ),
-						rawurlencode( $title )
+						TSS_LINKEDIN_URL . '?url=%s',
+						rawurlencode( $permalink )
 					);
 
 				} elseif ( 'WhatsApp' === $network && wp_is_mobile() ) {
@@ -885,6 +893,28 @@ class Toptal_Social_Share {
 		$links[] = '<a href="' . get_admin_url( null, 'options-general.php?page=' . TSS_SLUG ) . '">' . __( 'Settings', 'toptal-social-share' ) . '</a>';
 
 		return $links;
+	}
+
+	/**
+	 * Output Open Graph tags in <head> section.
+	 *
+	 * @since    1.0.0
+	 */
+	public function render_og_meta_tags() {
+
+		$post_id = get_queried_object_id();
+
+		ob_start();
+		?>
+		<meta property='og:title' content='<?php echo esc_attr( get_the_title( $post_id ) ); ?>'/>
+		<meta property='og:image' content='<?php echo esc_attr( get_the_post_thumbnail_url( $post_id ) ); ?>'/>
+		<meta property='og:description' content='<?php echo esc_attr( get_the_excerpt( $post_id ) ); ?>'/>
+		<meta property='og:url' content='<?php echo esc_attr( get_the_permalink( $post_id ) ); ?>'/>
+		<?php
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo ob_get_clean();
+
 	}
 
 }
