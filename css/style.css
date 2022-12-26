@@ -6,7 +6,6 @@
 }
 
 .tss-share-buttons a.share-button {
-	display: inline-block;
 	border: none;
 	float: left;
 	color: #fff;
@@ -22,13 +21,13 @@
 }
 
 .tss-share-buttons a.share-button:focus {
-   outline: none;
+	outline: none;
 }
 
 .tss-share-buttons a.share-button:hover,
 .tss-share-buttons a.share-button:focus,
 .tss-share-buttons a.share-button:visited {
-    color: #fff;
+	color: #fff;
 }
 
 .tss-share-buttons .share-button.facebook {
@@ -124,22 +123,22 @@
 .tss-featured-image-container .tss-featured-image-toggle,
 .tss-featured-image-container .tss-share-buttons {
 	position: absolute;
-    left: 50%;
-    bottom: 0;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+	left: 50%;
+	bottom: 0;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
 }
 
 .tss-featured-image-container .tss-featured-image-toggle {
-    padding: 0 30px;
-    color: #fff;
-    background-color: #777;
+	padding: 0 30px;
+	color: #fff;
+	background-color: #777;
 	font-size: 12px;
-    font-weight: 400;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    cursor: pointer;
-    z-index: 999;
+	font-weight: 400;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	cursor: pointer;
+	z-index: 999;
 }
 
 .tss-featured-image-container .tss-share-buttons {
@@ -152,26 +151,26 @@
 }
 
 .tss-featured-image-container .tss-share-buttons.small {
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
 }
 
 .tss-featured-image-container .tss-share-buttons.medium {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 }
 
 .tss-featured-image-container .tss-share-buttons.large {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 
 /* Floating Left */
 .tss-share-buttons.floating-left {
 	position: fixed;
-    left: 0;
-    top: 25%;
-    z-index: 999;
+	left: 0;
+	top: 25%;
+	z-index: 999;
 }
 
 .tss-share-buttons.floating-left .share-button {
