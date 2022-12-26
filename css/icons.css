@@ -24,21 +24,22 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-google-plus:before {
-	content: "\ea8b";
-}
 .icon-facebook:before {
 	content: "\ea90";
 }
+
 .icon-whatsapp:before {
 	content: "\ea93";
 }
+
 .icon-twitter:before {
 	content: "\ea96";
 }
+
 .icon-linkedin:before {
 	content: "\eaca";
 }
+
 .icon-pinterest:before {
 	content: "\ead2";
 }

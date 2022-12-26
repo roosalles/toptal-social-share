@@ -32,7 +32,6 @@ define( 'TSS_BASENAME', plugin_basename( __FILE__ ) );
 // Social Networks share urls.
 define( 'TSS_FACEBOOK_URL', 'https://www.facebook.com/sharer.php' );
 define( 'TSS_TWITTER_URL', 'https://twitter.com/intent/tweet' );
-define( 'TSS_GOOGLEPLUS_URL', 'https://plus.google.com/share' );
 define( 'TSS_LINKEDIN_URL', 'https://www.linkedin.com/shareArticle' );
 define( 'TSS_PINTEREST_URL', 'https://www.pinterest.com/pin/create/button/' );
 define( 'TSS_WHATSAPP_URL', 'whatsapp://send' );

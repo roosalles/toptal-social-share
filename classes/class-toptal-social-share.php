@@ -75,12 +75,11 @@ class Toptal_Social_Share {
 
 		$this->plugin_display_name = __( 'Toptal Social Share', 'toptal-social-share' );
 
-		$this->social_networks = array( 'Facebook', 'Twitter', 'Google+', 'Pinterest', 'LinkedIn', 'WhatsApp' );
+		$this->social_networks = array( 'Facebook', 'Twitter', 'Pinterest', 'LinkedIn', 'WhatsApp' );
 
 		$this->button_classes = array(
 			'Facebook'  => 'facebook',
 			'Twitter'   => 'twitter',
-			'Google+'   => 'google-plus',
 			'Pinterest' => 'pinterest',
 			'LinkedIn'  => 'linkedin',
 			'WhatsApp'  => 'whatsapp',
@@ -89,7 +88,6 @@ class Toptal_Social_Share {
 		$this->icon_classes = array(
 			'Facebook'  => 'icon-facebook',
 			'Twitter'   => 'icon-twitter',
-			'Google+'   => 'icon-google-plus',
 			'Pinterest' => 'icon-pinterest',
 			'LinkedIn'  => 'icon-linkedin',
 			'WhatsApp'  => 'icon-whatsapp',
@@ -569,14 +567,6 @@ class Toptal_Social_Share {
 						rawurlencode( $title )
 					);
 
-				} elseif ( 'Google+' === $network ) {
-
-					// Reference: https://developers.google.com/+/web/share/.
-					$share_link = sprintf(
-						TSS_GOOGLEPLUS_URL . '?url=%s',
-						rawurlencode( $permalink )
-					);
-
 				} elseif ( 'Pinterest' === $network ) {
 
 					// Reference: https://developers.pinterest.com/docs/widgets/save/?.
@@ -768,13 +758,12 @@ class Toptal_Social_Share {
 			$activated_networks = array(
 				'Facebook'  => 1,
 				'Twitter'   => 1,
-				'Google+'   => 1,
 				'Pinterest' => 1,
 				'LinkedIn'  => 1,
 				'WhatsApp'  => 1,
 			);
 
-			$ordered_networks = 'Facebook,Twitter,Google+,Pinterest,LinkedIn,WhatsApp';
+			$ordered_networks = 'Facebook,Twitter,Pinterest,LinkedIn,WhatsApp';
 
 			$icons_size = 'small';
 
