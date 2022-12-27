@@ -1,19 +1,21 @@
-# Toptal Social Share #
-**Contributors:** Rodrigo Salles
+# Toptal Social Share
+
+**Contributors:** roosalles  
+**Donate link:** https://rodrigosalles.com  
 **Tags:** social, share, facebook, twitter, pinterest, google+, linkedin, whatsapp
-**Requires at least:** 4.0
-**Tested up to:** 4.7.4
-**Stable tag:** 1.0
-**License:** GPLv2 or later
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+**Requires at least:** 3.0.1  
+**Tested up to:** 5.8  
+**Stable tag:** trunk  
+**Requires PHP:** 7.0  
+
+## Description 
 
 A utility for sharing content (posts, page and custom post types) on social networks.
-
-## Description ##
 
 This neat tool allows you to share content from your website on social networks. This WordPress plugin will automatically display selected social network(s) sharing buttons in posts and/or on pages.
 
 Main features:
+
 - Support for Facebook, Twitter, Google+, Pinterest, LinkedIn, WhatsApp (on mobile devices only)
 - Option to display social share buttons on posts, pages and other registered custom post types
 - Option to activate/deactivate social share buttons for different social networks
@@ -23,20 +25,18 @@ Main features:
 - Support for placing the social share button in several spots on your pages/posts
 - Shortcode is also available in order to include the social share buttons inside a post/page content, just use [tss_shortcode]
 
-## Installation ##
+## Installation
 
-Download the .zip file from the repository, upload it in the WordPress admin (Plugins -> Add New) and activate it when upload process is completed.
+1. Upload `toptal-social-share` folder to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Enable desired settings on Plugin settings page (Settings -> Toptal Social Share)
 
-## Frequently Asked Questions ##
+## Demo
 
-## Screenshots ##
+For basic functionalities demonstration, please visit:  
+https://playground.rprojectwebstudio.com/toptal-social-share-plugin-demo/
 
-## Changelog ##
+## Changelog
 
-### 1.0.0 ###
-* Initial release
-
-## Upgrade Notice ##
-
-### 1.0.0 ###
-* Initial release
+= 1.0 =  
+* First version of the plugin.
